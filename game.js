@@ -2,13 +2,15 @@
 // Variables
 // an array of random words
 var randomWords = ["dragon", "knight", "wizard", "magic","king","castle"];
-
-
-// an array of key press value
-var pressedKeys = [];
-
+var livesElements = document.getElementById("lives-remaining");
+var wordElement = document.querySelector("#randomWordContainer");
 // # of guesses left
 var guessesLeft = 9;
+guessesLeft--
+livesElements.innerText = "Lives: " + guessesLeft;
+
+// an array of key press value
+var correctGuesses = [];
 
 // # of wins
 var wins = 0;
@@ -22,17 +24,32 @@ console.log(randomWordToGuess);
 
 // Step: Display random word on screen
 for (var i = 0; i < randomWordToGuess.length; i++) {
-  document.querySelector("#randomWordContainer").innerHTML += "<span>" + randomWordToGuess[i] + "</span>";
+  wordElement.innerHTML += "<span>" + "_ " + "</span>";
 }
-
-// Step: Separate random word into blank spaces
 
 // Step: Click handler to register user key Press
 document.onkeyup = function (event) {
+  // guessesLeft--
+  // livesElements.innerText = "Lives: " + guessesLeft;
   // console.log(event.key);
-  pressedKeys.push(event.key); // Array manipulation methods: push, pop, shift, unshift
-  // console.log(pressedKeys);
+  letter = (event.key).toLowerCase();
 
+  if(randomWordToGuess.includes(letter) && !correctGuesses.includes(letter)){
+    correctGuesses.push(letter)
+  }
+
+  var wordDisplay = ""
+
+  for(var i=0; i< randomWordToGuess.length; i++){
+    if(correctGuesses.includes(randomWordToGuess[i])){
+      wordDisplay += " " + randomWordToGuess[i]
+    }
+    else{
+      wordDisplay += " _";
+    }
+  }
+
+  wordElement.innerText = wordDisplay
 };
 
 
